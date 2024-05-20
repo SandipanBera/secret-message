@@ -24,6 +24,7 @@ export async function POST(req: Request) {
     if (userByEmail) {
       if (!userByEmail.isVerified) {
         //update the existing user with new verification code and resend the mail
+        userByEmail.username = username;
         userByEmail.password = await bcrypt.hash(password, 10);
         userByEmail.verifyCode = verifyCode;
         userByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000);
@@ -56,14 +57,12 @@ export async function POST(req: Request) {
     );
     if (!verificationEmail.success) {
       return Response.json(
-        { success: false, message: verificationEmail.message },
+        new response( false, verificationEmail.message ),
         { status: 502 }
       );
     }
     return Response.json(
-      {
-        ...new response(true, "Registered Successfully!"),
-      },
+      new response(true, "Registered Successfully!"),
       {
         status: 200,
       }
@@ -71,7 +70,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error registering user", error);
     return Response.json(
-      { success: false, message: "Error registering user" },
+       new response(false,  "Error registering user") ,
       { status: 500 }
     );
   }

@@ -13,8 +13,8 @@ export const authOptions: NextAuthOptions = {
         try {
           const user = await UserModel.findOne({
             $or: [
-              { username: credentials.identifier.username },
-              { email: credentials.identifier.email },
+              { username: credentials.identifier },
+              { email: credentials.identifier },
             ],
           });
           if (!user) throw new Error("No user found");

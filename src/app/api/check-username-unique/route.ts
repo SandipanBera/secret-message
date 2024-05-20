@@ -10,18 +10,19 @@ export async function GET(request:Request) {
         const result = UsernameValidation.safeParse(username);
         console.log(result);
         
+        
         if (!result.success) {
-            return Response.json({...new response(false,'Invalid query parameter')},{status:400})
+            return Response.json(new response(false,'Invalid query parameter'),{status:400})
         }
         const user = await UserModel.findOne({ username, isVerified: true })
         if (user) {
-            return Response.json({ ...new response(false,"username is not unique") },{ status:200 })
+            return Response.json(new response(false,"username is not unique") ,{ status:200 })
         }
-        return Response.json({ ...new response(true,"username is unique") }, { status: 200 })
+        return Response.json(new response(true,"username is unique") , { status: 200 })
     } catch (error) {
         console.error(error);
         return Response.json(
-            {...new response(false,'server error')},
+            new response(false,'server error'),
             {status:500}
         )
         
