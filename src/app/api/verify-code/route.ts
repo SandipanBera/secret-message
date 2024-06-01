@@ -26,6 +26,8 @@ export async function POST(req: Request) {
         { status: 404 }
       );
     }
+    user.isVerified = true
+    await user.save()
     return Response.json(
       new response(true, "Congrats!!Your account verified successfully"),
       { status: 200 }

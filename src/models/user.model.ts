@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { Message } from "./message.model";
+import { Message, messageSchema } from "./message.model";
+
 export interface User extends Document {
   username: string;
   email: string;
@@ -27,11 +28,10 @@ const userSchema: Schema<User> = new Schema({
     default: false,
   },
   isAcceptMessage: { type: Boolean, default: false },
-  messages: [],
+  messages: [messageSchema],
 });
 const UserModel =
   (mongoose.models.User as mongoose.Model<User>) ||
   mongoose.model("User", userSchema);
-  console.log("user model")
 export default UserModel;
 

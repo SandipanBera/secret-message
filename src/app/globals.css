@@ -68,7 +68,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border ;
   }
   body {
     @apply bg-background text-foreground;
@@ -85,11 +85,14 @@
 
   }
   .btn-hover{
-    @apply bg-gradient-to-r from-electric-violet-600 to-electric-violet-700
-
+    @apply bg-gradient-to-r from-electric-violet-600 to-electric-violet-700 transition-all ease-in-out duration-300
   }
   .btn-active{
     @apply bg-gradient-to-r from-electric-violet-700 to-electric-violet-800
+
+  }
+  .gradient-bg-violet{
+    @apply bg-gradient-to-br from-purple-200 to-violet-300
 
   }
 }

@@ -7,21 +7,11 @@ export async function POST(req: Request) {
  try {
   const result = await streamText({
     model: openai('gpt-3.5-turbo'),
-    maxTokens:400,
     prompt,
   });
 
-  const data = new StreamData();
+ return result.toAIStreamResponse()
 
-  data.append({ test: 'value' });
-
-  const stream = result.toAIStream({
-    onFinal(_) {
-      data.close();
-    },
-  });
-
-  return new StreamingTextResponse(stream, {}, data);
  } catch (error) {
    console.log(error);
    throw error

@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import axios, { AxiosError } from "axios";
 import { toast } from "@/components/ui/use-toast";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormField,
@@ -21,6 +21,7 @@ function page({ params }: { params: { username: string } }) {
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
   });
+  const router = useRouter();
 
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
     try {
@@ -37,6 +38,7 @@ function page({ params }: { params: { username: string } }) {
       router.replace("/sign-in");
     } catch (error) {
       const axiosError = error as AxiosError<apiResponse>;
+      console.log(axiosError)
       toast({
         title: "Verification Failed",
         description:
@@ -48,7 +50,7 @@ function page({ params }: { params: { username: string } }) {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen ">
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl mb-6">

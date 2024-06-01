@@ -6,34 +6,37 @@ import UserModel from "@/models/user.model";
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      id: "Credentials",
+      id: "credentials",
       name: "Credentials",
+      credentials: {
+      },
       async authorize(credentials: any): Promise<any> {
-        await dbConnect();
-        try {
+        await dbConnect();    
+      
           const user = await UserModel.findOne({
             $or: [
               { username: credentials.identifier },
               { email: credentials.identifier },
             ],
           });
-          if (!user) throw new Error("No user found");
-          if (!user.isVerified)
-            throw new Error("Please verify your account first.");
+          if (!user) {
+            throw new Error("No user found");
+          } 
+          if (!user.isVerified) {
+             throw new Error("Please verify your account first.");
+          }
+           
           const isValidPassword = await bcrypt.compare(
             credentials.password,
             user.password
           );
-          if (!isValidPassword) throw new Error("Invalid Password");
+          if (!isValidPassword) {
+            throw new Error("Invalid Password");
+          }
           return user;
-        } catch (error: any) {
-          throw new Error(error);
-        }
+       
       },
-      credentials: {
-        username: { label: "Username", type: "text " },
-        password: { label: "Password", type: "password" },
-      },
+      
     }),
   ],
   callbacks: {
@@ -48,7 +51,7 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        token.id = user._id?.toString();
+        token._id = user._id?.toString();
         token.username = user.username;
         token.isVerified = user.isVerified;
         token.isAcceptMessage = user.isAcceptMessage;

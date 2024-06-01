@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "./context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/Navbar";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={`${inter.className} bg-electric-violet-950`}>
-          <Navbar />
+        <body className={`${inter.className} bg-gradient-to-tl from-purple-200 via-indigo-400 to-violet-600 min-h-screen`}>
           {children}
           <Toaster />
         </body>
       </AuthProvider>
-    
     </html>
   );
 }

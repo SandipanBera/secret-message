@@ -101,7 +101,7 @@ export default function SignUpForm() {
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
-      <div className="w-full max-w-md p-8 space-y-8 bg-gradient-to-br from-purple-200 to-violet-300 rounded-lg shadow-md">
+      <div className="w-full max-w-md gradient-bg-violet p-8 space-y-8 b rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold text-electric-violet-950 tracking-tight lg:text-5xl mb-6">
             Join Secret Message
@@ -162,7 +162,7 @@ export default function SignUpForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className='w-full btn-default' disabled={isSubmitting}>
+            <Button type="submit" className='w-full' disabled={isSubmitting}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

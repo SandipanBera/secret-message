@@ -1,13 +1,13 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -19,19 +19,20 @@ const config = {
     },
     extend: {
       colors: {
-        'electric-violet': {
-          '50': '#faf5ff',
-          '100': '#f4e9fe',
-          '200': '#ead6fe',
-          '300': '#dab6fc',
-          '400': '#c387f9',
-          '500': '#ac59f3',
-          '600': '#9a3de6',
-          '700': '#8226ca',
-          '800': '#6e24a5',
-          '900': '#5b1f84',
-          '950': '#3d0962',
-      },  
+        "electric-violet": {
+          "50": "#faf5ff",
+          "100": "#f4e9fe",
+          "200": "#ead6fe",
+          "300": "#dab6fc",
+          "400": "#c387f9",
+          "500": "#ac59f3",
+          "600": "#9a3de6",
+          "700": "#8226ca",
+          "800": "#6e24a5",
+          "850": "#2e0041",
+          "900": "#5b1f84",
+          "950": "#0b0010",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -65,7 +66,6 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-       
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -89,6 +89,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

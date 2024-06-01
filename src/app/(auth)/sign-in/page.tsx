@@ -33,31 +33,42 @@ function page() {
 
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     setIsSubmiting(true);
-    const data = await signIn("credentials", {
-      identifier: values.username,
-      password: values.password,
-      redirect: false,
-    });
-    if (data?.error) {
-      toast({
-        title: "Failed to Sign In.",
-        description: "Please make sure all the field fill up properly",
-        variant: "destructive",
+    try {
+      const data = await signIn("credentials", {
+        identifier: values.username,
+        password: values.password,
+        redirect:false
       });
+
+      if (data?.error) {
+        toast({
+          title: "Failed to Sign In.",
+          description: "Please make sure all the field fill up properly",
+          variant: "destructive",
+        });
+        throw new Error(data.error);
+      }
+      if (data?.url) {
+        // Redirect user to dashboard after successfully sign in
+        router.replace(`/dashboard`);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmiting(false);
     }
-    if (data?.url) {
-      // Redirect user to dashboard after successfully sign in
-      router.replace(`/dashboard`);
-    }
-    setIsSubmiting(false);
   }
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
-      <div className="w-full max-w-md  space-y-8 shadow-lg rounded-lg bg-gradient-to-br from-purple-200 to-violet-300  p-8">
+      <div className="w-full max-w-md space-y-8 shadow-lg rounded-lg gradient-bg-violet  p-8">
         <div>
-        <h1 className="text-center text-4xl text-electric-violet-950 font-extrabold tracking-tight lg:text-5xl mb-6">Sign In Secret message</h1>
-          <h1 className="mb-4 text-center text-electric-violet-600">The gateway of your anonymous journey</h1>
+          <h1 className="text-center text-4xl text-electric-violet-950 font-extrabold tracking-tight lg:text-5xl mb-6">
+            Sign In Secret message
+          </h1>
+          <h1 className="mb-4 text-center text-electric-violet-600">
+            The gateway of your anonymous journey
+          </h1>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -66,7 +77,7 @@ function page() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel >Username</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
                     <Input placeholder="username" {...field} />
                   </FormControl>
@@ -79,16 +90,19 @@ function page() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel >Password</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input type="password" placeholder="password" {...field} />
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isSubmiting} className="w-full btn-default">
+            <Button
+              type="submit"
+              disabled={isSubmiting}
+              className="w-full "
+            >
               {isSubmiting ? (
                 <>
                   {" "}
@@ -100,16 +114,16 @@ function page() {
               )}
             </Button>
           </form>
-          <p className="font-normal text-center ">
-            Don&apos;t have an account?{" "}
-            <Link
-              href="/sign-up"
-              className="text-electric-violet-600 hover:text-electric-violet-800 underline"
-            >
-              Sign up
-            </Link>
-          </p>
         </Form>
+        <p className="font-normal text-center ">
+          Don&apos;t have an account?{" "}
+          <Link
+            href="/sign-up"
+            className="text-electric-violet-600 hover:text-electric-violet-800 underline"
+          >
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );
