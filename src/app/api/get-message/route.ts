@@ -35,7 +35,7 @@ export async function GET() {
 
     
     if (!user||user.length===0) {
-      return Response.json(new response(false, "User not found"), {
+      return Response.json(new response(false, "No messages found"), {
         status: 404,
       });
     }

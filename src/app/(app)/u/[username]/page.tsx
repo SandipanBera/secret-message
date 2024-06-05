@@ -48,7 +48,7 @@ export default function SendMessage({
     try {
       const response = await axios.post<apiResponse>("/api/send-message", {
         content: data.content,
-        username: params.username,
+        username: decodeURIComponent(params.username),
       });
       toast({
         title: "Successfull",

@@ -1,19 +1,15 @@
 "use client"
-import React, { useEffect, useRef, useState } from 'react'
-function page() {
-  const render = useRef(0);
 
-    console.log(render.current + 1);
-    useEffect(() => {
-      console.log("render");
-     
-       
-    }, [])
+import { Button } from "@/components/ui/button"
+import { signIn } from "next-auth/react"
+
+function page() {
+
     
     
   return (
     <div>demo page
-      
+      <Button onClick={()=>signIn()}>sign in</Button>
     </div>
   )
 }

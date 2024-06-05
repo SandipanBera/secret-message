@@ -20,16 +20,16 @@ const userSchema: Schema<User> = new Schema({
     required: true,
   },
   email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
-  verifyCode: { type: String, required: true },
-  verifyCodeExpiry: { type: Date, required: true },
+  password: { type: String },
+  verifyCode: { type: String},
+  verifyCodeExpiry: { type: Date },
   isVerified: {
     type: Boolean,
     default: false,
   },
   isAcceptMessage: { type: Boolean, default: false },
   messages: [messageSchema],
-});
+},{timestamps:true});
 const UserModel =
   (mongoose.models.User as mongoose.Model<User>) ||
   mongoose.model("User", userSchema);

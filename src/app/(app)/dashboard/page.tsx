@@ -21,7 +21,7 @@ function UserDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const { toast } = useToast();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession({ required: true });
 
   const form = useForm({
     resolver: zodResolver(acceptMessageSchema),
@@ -64,7 +64,7 @@ function UserDashboard() {
       } catch (error) {
         const axiosError = error as AxiosError<apiResponse>;
         toast({
-          title: "Error",
+          title: "Message",
           description:
             axiosError.response?.data.message ?? "Failed to fetch messages",
           variant: "destructive",
@@ -110,7 +110,7 @@ function UserDashboard() {
       prevMessages.filter((message) => message._id !== messageId)
     );
   };
-  if (status == "loading") {
+  if (!session) {
     return (
       <div className=" flex justify-center items-center h-screen">
         <Loader className="animate-spin mr-2" size={30} />

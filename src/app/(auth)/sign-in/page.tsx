@@ -39,7 +39,6 @@ function page() {
         password: values.password,
         redirect:false
       });
-
       if (data?.error) {
         toast({
           title: "Failed to Sign In.",

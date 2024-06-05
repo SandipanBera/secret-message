@@ -18,8 +18,7 @@ export async function POST(req: Request) {
             isAcceptMessage: acceptMessages   
         },{new:true})
         if (!updatedUser) {
-            return Response.json(new response(false, "User not found"), { status: 404 })
-            
+            return Response.json(new response(false, "User not found"), { status: 404 })   
         }
         return Response.json(new response(true,"Successfully changed accept message status",null,undefined,updatedUser.isAcceptMessage),{status:200})
 
