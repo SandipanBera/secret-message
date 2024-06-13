@@ -2,15 +2,14 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 import { UsernameValidation } from "@/schemas/signUpSchema";
 import response from "@/util/response";
+console.log("from check-password");
+
 export async function GET(request:Request) {
     await dbConnect()
     try {
         const { searchParams } = new URL(request.url)
         const username = searchParams.get("username") 
         const result = UsernameValidation.safeParse(username);
-        console.log(result);
-        
-        
         if (!result.success) {
             return Response.json(new response(false,'Invalid query parameter'),{status:400})
         }

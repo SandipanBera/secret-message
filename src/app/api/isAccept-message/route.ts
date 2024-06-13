@@ -3,6 +3,7 @@ import { authOptions } from "../auth/[...nextauth]/option";
 import { getServerSession } from "next-auth";
 import response from "@/util/response";
 import UserModel from "@/models/user.model";
+console.log("post request");
 
 export async function POST(req: Request) {
     await dbConnect()
@@ -30,6 +31,8 @@ export async function POST(req: Request) {
     }
     
 }
+console.log("get request");
+
 export async function GET() {
     await dbConnect()
     try {

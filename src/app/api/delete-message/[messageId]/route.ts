@@ -6,6 +6,8 @@ import UserModel from "@/models/user.model";
 type Params={
     messageId: string;
 }
+
+
 export async function DELETE(context: { params: Params }) {
     await dbConnect();
     const { messageId } = context.params

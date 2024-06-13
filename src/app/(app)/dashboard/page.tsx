@@ -14,14 +14,16 @@ import { useSession } from "next-auth/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { acceptMessageSchema } from "@/schemas/acceptMessageSchema";
-import { Loader } from "lucide-react";
 
-function UserDashboard() {
+
+
+ function UserDashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSwitchLoading, setIsSwitchLoading] = useState(false);
   const { toast } = useToast();
   const { data: session } = useSession({ required: true });
+
 
   const form = useForm({
     resolver: zodResolver(acceptMessageSchema),
@@ -109,18 +111,13 @@ function UserDashboard() {
     setMessages((prevMessages) =>
       prevMessages.filter((message) => message._id !== messageId)
     );
-  };
-  if (!session) {
-    return (
-      <div className=" flex justify-center items-center h-screen">
-        <Loader className="animate-spin mr-2" size={30} />
-        Loading....
-      </div>
-    );
-  }
-  const { username } = session?.user as User;
-  const baseUrl = window.location.origin;
-  const profileUrl = `${baseUrl}/u/${username}`;
+   };
+
+   const user = session?.user as User;
+
+   
+  const baseUrl = window.location.origin
+  const profileUrl = `${baseUrl}/u/${user?.username}`;
   const copyToClipboard = () => {
     navigator.clipboard.writeText(profileUrl);
     toast({

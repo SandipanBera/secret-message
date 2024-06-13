@@ -11,17 +11,18 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
-      password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any): Promise<any> {
         await dbConnect();
-
-        const user = await UserModel.findOne({
+        let user = await UserModel.findOne({
           $or: [
             { username: credentials.identifier },
             { email: credentials.identifier },
           ],
         });
+     
+        
         if (!user) {
           throw new Error("No user found");
         }
@@ -36,6 +37,7 @@ export const authOptions: NextAuthOptions = {
         if (!isValidPassword) {
           throw new Error("Invalid Password");
         }
+       
         return user;
       },
     }),
@@ -51,6 +53,7 @@ export const authOptions: NextAuthOptions = {
         session.user.isAcceptMessage = token.isAcceptMessage;
         session.user.isVerified = token.isVerified;
         session.user.username = token.username;
+       
       }
       return session;
     },
@@ -60,6 +63,7 @@ export const authOptions: NextAuthOptions = {
         token.username = user.username;
         token.isVerified = user.isVerified;
         token.isAcceptMessage = user.isAcceptMessage;
+       
       }
       if (profile) {
         const myUser = await UserModel.findOne({ email: profile.email });
@@ -112,5 +116,6 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+ 
   secret: process.env.NEXTAUTH_SECRET,
 };

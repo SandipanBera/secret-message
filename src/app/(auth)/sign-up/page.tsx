@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDebounceCallback } from "usehooks-ts";
 import * as z from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,9 +21,9 @@ import axios, { AxiosError } from "axios";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signUpSchema } from "@/schemas/signUpSchema";
-import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SignUpForm() {
   const [username, setUsername] = useState("");
@@ -70,45 +69,46 @@ export default function SignUpForm() {
   }, [username]);
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
-    setIsSubmitting(true);
-    try {
-      const response = await axios.post<apiResponse>("/api/sign-up", data);
+    console.log(data)
+    // setIsSubmitting(true);
+    // try {
+    //   const response = await axios.post<apiResponse>("/api/sign-up", data);
 
-      toast({
-        title: "Success",
-        description: response.data.message,
-      });
+    //   toast({
+    //     title: "Success",
+    //     description: response.data.message,
+    //   });
 
-      router.replace(`/verify/${username}`);
+    //   router.replace(`/verify/${username}`);
 
-      setIsSubmitting(false);
-    } catch (error) {
-      console.error("Error during sign-up:", error);
+    //   setIsSubmitting(false);
+    // } catch (error) {
+    //   console.error("Error during sign-up:", error);
 
-      const axiosError = error as AxiosError<apiResponse>;
+    //   const axiosError = error as AxiosError<apiResponse>;
 
-      // Default error message
-      let errorMessage = axiosError.response?.data.message;
-      ("There was a problem with your sign-up. Please try again.");
+    //   // Default error message
+    //   let errorMessage = axiosError.response?.data.message;
+    //   ("There was a problem with your sign-up. Please try again.");
 
-      toast({
-        title: "Sign Up Failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
+    //   toast({
+    //     title: "Sign Up Failed",
+    //     description: errorMessage,
+    //     variant: "destructive",
+    //   });
 
-      setIsSubmitting(false);
-    }
+    //   setIsSubmitting(false);
+    // }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen ">
-      <div className="w-full max-w-md gradient-bg-violet p-8 space-y-6 b rounded-lg shadow-md">
+      <div className="w-full max-w-md gradient-bg-violet p-6 space-y-6 mx-4 md:mx-auto rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold text-electric-violet-950 tracking-tight lg:text-5xl mb-6">
             Join Secret Message
           </h1>
-          <p className="mb-4 text-electric-violet-600">
+          <p className="mb-2 text-electric-violet-600">
             Sign up to start your anonymous adventure
           </p>
         </div>
@@ -191,12 +191,7 @@ export default function SignUpForm() {
           }}
         >
           <div className="flex items-center justify-center gap-5 ">
-            <Image
-              src={"/google.png"}
-              alt="google image"
-              width={30}
-              height={30}
-            />
+          <FcGoogle size={30} />
             Login with Google
           </div>
         </Button>
